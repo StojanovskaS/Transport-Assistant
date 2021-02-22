@@ -1,0 +1,84 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+<!--    <form id="filter-form">-->
+<!--        <div  class="form-row align-items-center">-->
+<!--            <div class="col-auto">-->
+<!--        <input id="odGradSearch" class="form-control"type="text" placeholder="Од град" name="odGradSearch"/>-->
+<!--            </div>-->
+<!--            <div class="col-auto">-->
+<!--        <input id="doGradSearch" class="form-control" type="text" name="doGradSearch"  placeholder="До град" />-->
+<!--            </div>-->
+<!--            <div class="col-auto">-->
+<!--        <select id="kategorijas" name="kategorijaSearch">-->
+<!--            <option value="">All</option>-->
+<!--            &lt;!&ndash; For each category you should have one <option> like below  &ndash;&gt;-->
+<!--            <option th:each="cat : ${navedeni}" th:value="${cat}" th:text="${cat}"></option>-->
+<!--        </select>-->
+<!--            </div>-->
+<!--            <div class="col-auto">-->
+<!--        <button id="filter" type="submit"  class="btn btn-outline-primary">Пребарај</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" class="text-primary">Корисник</th>
+            <th scope="col" class="text-primary">Опис</th>
+            <th scope="col" class="text-primary">Категорија</th>
+            <th scope="col" class="text-primary">Од град</th>
+            <th scope="col" class="text-primary">До град</th>
+            <th scope="col" class="text-primary">Дата</th>
+            <th scope="col" class="text-primary">Цена</th>
+            <th scope="col" class="text-primary" sec:authorize="isAuthenticated()"><i class="fa fa-info-circle"></i></th>
+            <th scope="col" class="text-primary"><i class="fa fa-comments"></i></th>
+
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el: ${lista}" >
+            <td th:text="${el.user.username}"></td>
+            <td th:text="${el.opis}"></td>
+
+            <td>
+                <ul class="list-group">
+                    <!-- For each product's category you should display one <li> element like the one below -->
+                    <li class="list-group-item list-group-item-action list-group-item-info" th:each="cat : ${el.categoryList}" th:text="${cat.categoryName}" >[cat.name]</li>
+                </ul>
+            </td>
+            <td th:text="${el.odGrad}"></td>
+            <td th:text="${el.categoryList.get(0).grad}"></td>
+            <td th:text="${el.getData()}"></td>
+            <td th:text="${el.cena}"></td>
+            <td>
+                <th:block  sec:authorize="isAuthenticated()">
+                    <a id="likebtn" class="col-sm-12 col-md-12" th:href="@{'/home/{id}/like' (id=${el.getId()})}"><i class="fa fa-thumbs-up"></i></a>
+                </th:block>
+                <th:block  sec:authorize="isAuthenticated()">
+                    <a id="dislikebtn" class="col-sm-12 col-md-12" th:href="@{'/home/{id}/deletelike' (id=${el.getId()})}"><i class="fa fa-thumbs-down"></i></a>
+                </th:block>
+
+            </td>
+            <td th:text="${el.likepart?.likesNo}"></td>
+
+            <td>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{'/home/delete/{id}' (id=${el.getId()})}" th:method="DELETE" >
+                        <button type="submit" class="btn btn-sm btn-warning">DELETE</button>
+                    </form>
+                </th:block>
+                <th:block  sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="col-sm-12 col-md-12" th:href="@{'/home/{id}/edit' (id=${el.getId()})}">Edit</a>
+                </th:block>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div  class="col-sm-12 col-md-12" sec:authorize="isAuthenticated()">
+        <a href="/home/add" class="btn btn-block btn-info add-balloon">Објави нов пост</a>
+    </div>
+</th:block>

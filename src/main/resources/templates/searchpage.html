@@ -1,0 +1,63 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="bg-info">
+    <form id="filter-form" class="mx-auto ">
+
+        <div  class="form-row align-items-center" style="margin-left: 820px;">
+            <div class="col-auto">
+                <input id="odGradSearch" class="form-control"type="text" placeholder="Од град" name="odGradSearch"/>
+            </div>
+            <div class="col-auto">
+                <input id="doGradSearch" class="form-control" type="text" name="doGradSearch"  placeholder="До град" />
+            </div>
+            <div class="col-auto">
+                <button id="filter" type="submit"  class="btn btn-outline-light">Пребарај</button>
+            </div>
+        </div>
+    </form>
+    </section>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" class="text-primary">Корисник</th>
+            <th scope="col" class="text-primary">Опис</th>
+            <th scope="col" class="text-primary">Категорија</th>
+            <th scope="col" class="text-primary">Од град</th>
+            <th scope="col" class="text-primary">До град</th>
+            <th scope="col" class="text-primary">Дата</th>
+            <th scope="col" class="text-primary">Цена</th>
+            <th scope="col" class="text-primary" sec:authorize="isAuthenticated()"><i class="fa fa-info-circle"></i></th>
+            <th scope="col" class="text-primary"><i class="fa fa-comments"></i></th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el: ${lista}" >
+            <td th:text="${el.user.username}"></td>
+            <td th:text="${el.opis}"></td>
+
+            <td>
+                <ul class="list-group">
+                    <!-- For each product's category you should display one <li> element like the one below -->
+                    <li class="list-group-item list-group-item-action list-group-item-info" th:each="cat : ${el.categoryList}" th:text="${cat.categoryName}" >[cat.name]</li>
+                </ul>
+            </td>
+            <td th:text="${el.odGrad}"></td>
+            <td th:text="${el.categoryList.get(0).grad}"></td>
+            <td th:text="${el.getData()}"></td>
+            <td th:text="${el.cena}"></td>
+            <td>
+                <th:block  sec:authorize="isAuthenticated()">
+                    <a id="likebtn" class="col-sm-12 col-md-12" th:href="@{'/home/{id}/like' (id=${el.getId()})}"><i class="fa fa-thumbs-up"></i></a>
+                </th:block>
+                <th:block  sec:authorize="isAuthenticated()">
+                    <a id="dislikebtn" class="col-sm-12 col-md-12" th:href="@{'/home/{id}/deletelike' (id=${el.getId()})}"><i class="fa fa-thumbs-down"></i></a>
+                </th:block>
+
+            </td>
+            <td th:text="${el.likepart?.likesNo}"></td>
+        </tr>
+        </tbody>
+    </table>
+</th:block>

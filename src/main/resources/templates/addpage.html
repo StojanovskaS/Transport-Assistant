@@ -1,0 +1,79 @@
+<th:block xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading bg-ligh text-info">Форма за додавање и едитирање на објави</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+            <form method="POST" th:action="@{'/home/{id}' (id=${postot?.id})}">
+
+                    <div class="form-group">
+                        <label for="odgrad">Поаѓање од кој град?</label>
+                        <input type="text"
+                               class="form-control"
+                               id="odgrad"
+                               name="odgrad"
+                               th:value="(${postot}!=null ? ${postot.odGrad} : '')"
+                               required
+                               placeholder="Внесете од кој град тргнувате">
+                    </div>
+                    <div class="form-group">
+                        <label for="opis">Опис:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="opis"
+                               name="opis"
+                               th:value="(${postot} !=null ? ${postot.opis} : '')"
+                               placeholder="Внесете Опис">
+                    </div>
+                    <div class="form-group">
+                        <label for="cena">Цена:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="cena"
+                               name="cena"
+                               th:value="(${postot} !=null ? ${postot.cena} : '')"
+                               placeholder="Внесете цена по човек">
+                    </div>
+                <div class="form-group ">
+                    <label class="control-label col-sm-2 requiredField" for="date">
+                        Дата:
+                    </label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar">
+                                </i>
+                            </div>
+                            <input class="form-control" id="date" name="date" placeholder="Формат:DD/MM/YYYY" type="text"/>
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label>Во делови од Македонија се градовите низ кои минувате?</label>
+                        <select id="del" name="del" multiple="multiple" class="form-control">
+                            <option  th:each="cat: ${categories}" th:value="${cat}" th:text="${cat}"> [cat.name]</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="dograd">До кој град:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="dograd"
+                               name="dograd"
+                               th:value="(${postot} !=null ? ${postot.categoryList.get(0).grad} : '')"
+                               placeholder="Внесете крајна станица">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a  type="button" class="btn btn-primary" href="/home">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</th:block>

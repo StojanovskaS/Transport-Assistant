@@ -1,0 +1,49 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+
+    <div class="container" >
+        <h1 th:if="${hasError}" th:text="${error}"></h1>
+    </div>
+    <div class="container">
+        <form class="form-signin mt-xl-5" method="post" action="/register">
+            <h2 class="form-signin-heading text-warning">Стани член на оваа екипа</h2>
+            <p>
+                <label for="firstname" class="sr-only">Име</label>
+                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Име" required="" autofocus="">
+            </p>
+            <p>
+                <label for="lastname" class="sr-only">Презиме</label>
+                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Презиме" required="" autofocus="">
+            </p>
+            <p>
+                <label for="username" class="sr-only">Корисничко име</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Корисничко име/Username" required="" autofocus="">
+            </p>
+            <p>
+                <label for="password" class="sr-only">Лозинка</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Лозинка/Password" required="">
+            </p>
+            <p>
+                <label for="repeatedPassword" class="sr-only">Повтори ја лозинката</label>
+                <input type="password" id="repeatedPassword" name="repeatedPassword" class="form-control" placeholder="Повтори ја лозинката/Repeat Password" required="">
+            </p>
+            <p>
+                <label for="email" class="sr-only">Корисничка сметка</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="email" required="" autofocus="">
+            </p>
+            <p>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="role" type="radio" id="ROLE_ADMIN" value="ROLE_ADMIN">
+                <label class="form-check-label" for="ROLE_ADMIN">Улога на Админ</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="role"  type="radio" id="ROLE_USER" value="ROLE_USER">
+                <label class="form-check-label" for="ROLE_USER">Улога на Корисник</label>
+            </div>
+            </p>
+
+            <button class="btn btn-lg btn-warning btn-block" type="submit">Регистрирај се!</button>
+        </form>
+        <a href="/login" class="btn btn-block btn-light">Веќе имаш акаунт? Најави се тука!</a>
+    </div>
+
+</th:block>
